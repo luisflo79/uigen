@@ -338,11 +338,13 @@ export class VirtualFileSystem {
     }
   }
 
-  deserializeFromNodes(data: Record<string, FileNode>): void {
+  deserializeFromNodes(data: Record<string, FileNode> | null | undefined): void {
     // Clear existing files except root
     this.files.clear();
     this.root.children?.clear();
     this.files.set("/", this.root);
+
+    if (!data) return;
 
     // Sort paths to ensure parent directories are created first
     const paths = Object.keys(data).sort();

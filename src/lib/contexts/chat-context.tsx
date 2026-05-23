@@ -43,8 +43,9 @@ export function ChatProvider({
       files: fileSystem.serialize(),
       projectId,
     },
+    // CHANGE: AI SDK 6 uses `input` instead of `args` for tool call arguments
     onToolCall: ({ toolCall }) => {
-      handleToolCall(toolCall);
+      handleToolCall({ toolName: (toolCall as any).toolName, args: (toolCall as any).input ?? (toolCall as any).args });
     },
   });
 
